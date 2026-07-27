@@ -1,7 +1,7 @@
 variable "container_name" {
   description = "Docker container name"
   type        = string
-  default     = "ubuntu-server"
+  default     = "ubuntu-server-02"
 }
 
 variable "image_name" {
