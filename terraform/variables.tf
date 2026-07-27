@@ -1,0 +1,11 @@
+variable "container_name" {
+  description = "Docker container name"
+  type        = string
+  default     = "ubuntu-server"
+}
+
+variable "image_name" {
+  description = "Docker image"
+  type        = string
+  default     = "ubuntu:24.04"
+}
