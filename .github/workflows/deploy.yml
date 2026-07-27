@@ -12,13 +12,35 @@ jobs:
     defaults:
       run:
         working-directory: terraform
+        shell: powershell
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Show Git Commit
+        run: |
+          Write-Host "Current Commit:"
+          git rev-parse HEAD
+
+      - name: Show Working Directory
+        run: |
+          Write-Host "Current Directory:"
+          Get-Location
+
+          Write-Host "`nFiles:"
+          Get-ChildItem
+
+      - name: Show variables.tf
+        run: |
+          Write-Host "Contents of variables.tf"
+          Get-Content .\variables.tf
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Version
+        run: terraform version
 
       - name: Terraform Init
         run: terraform init
@@ -27,7 +49,13 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -no-color
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -no-color
+
+      - name: Show Terraform State
+        run: terraform state show docker_container.ubuntu
+
+      - name: Show Docker Containers
+        run: docker ps -a
